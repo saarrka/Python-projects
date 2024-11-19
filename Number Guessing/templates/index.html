@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1 id="main-heading">Number Guessing Game</h1>
+    <p id="main-p">I have imagined a number between 1 and 10. Try to guess which one it is!</p>
+
+    {% if feedback %}
+        <p class="feedback"><strong>{{ feedback }}</strong></p>
+    {% endif %}
+
+    <form method="POST">
+        <div class="numbers">
+            {% for i in range(1, 21) %}
+                <button
+                    type="submit"
+                    name="guess"
+                    value="{{ i }}"
+                    class="number {% if i in attempted_numbers %}disabled{% endif %}"
+                    {% if i in attempted_numbers %}disabled{% endif %}
+                >
+                    {{ i }}
+                </button>
+
+            {% endfor %}
+        </div>
+    </form>
+
+    <form method="POST" id="game">
+        <button type="submit" name="new_game" id="new-game" value="true" class="new-game-button">
+            New Game
+        </button>
+    </form>
+
+    <div class="attempts">
+        <p>Previous attempts:</p>
+        <ul>
+            {% for num in attempted_numbers %}
+                <li>{{ num }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
